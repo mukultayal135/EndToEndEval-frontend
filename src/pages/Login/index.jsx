@@ -16,8 +16,10 @@ const Login = () => {
         </div>
       </div>
       <div className="right-container">
-        <h1>Login to your CMS+ account</h1>
-        <LoginForm />
+        <div className="right-child">
+          <h1>Login to your CMS+ account</h1>
+          <LoginForm />
+        </div>
       </div>
     </div>
   );

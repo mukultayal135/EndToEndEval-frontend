@@ -5,3 +5,7 @@ export const GET_TOKEN = {
   url: '/login',
   method: 'POST',
 };
+export const GET_ALL_COLLECTION = {
+  url: '/content ',
+  method: 'GET',
+};

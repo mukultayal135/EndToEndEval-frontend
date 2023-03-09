@@ -3,9 +3,14 @@
   display: flex;
 }
 .collection-type {
-  min-width: 200px;
+  min-width: 150px;
   width: 25%;
-  background-color: black;
+  background-color: #272727;
+}
+.content-page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 .title-home {
   padding: 15px 0;
@@ -19,11 +24,7 @@
   width: max-content;
   padding-left: 30px;
 }
-.add-type {
-  min-width: 300px;
-  width: 25%;
-  background-color: #d4d6e5;
-}
+
 .add-field {
   min-width: 500px;
   width: 50%;

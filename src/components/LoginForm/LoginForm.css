@@ -31,11 +31,16 @@
   font-size: 12px;
   color: #666;
 }
-button {
+.field button {
   color: white;
   padding: 0.5em;
   background: rgb(2, 0, 36);
   background-color: #9064ff;
+  background-image: linear-gradient(
+    to right,
+    rgba(151, 108, 255, 255),
+    rgba(102, 63, 255, 255)
+  );
   border-style: none;
   border-radius: 5px;
   width: 210px;
