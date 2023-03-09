@@ -1,0 +1,31 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+}
+.collection-type {
+  min-width: 200px;
+  width: 25%;
+  background-color: black;
+}
+.title-home {
+  padding: 15px 0;
+  width: 100%;
+  background-color: #5905ce;
+}
+.collection-type h1 {
+  margin: 0;
+  padding: 0;
+  color: white;
+  width: max-content;
+  padding-left: 30px;
+}
+.add-type {
+  min-width: 300px;
+  width: 25%;
+  background-color: #d4d6e5;
+}
+.add-field {
+  min-width: 500px;
+  width: 50%;
+  background-color: #ebeefe;
+}
