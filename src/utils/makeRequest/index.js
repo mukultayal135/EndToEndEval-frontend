@@ -9,7 +9,9 @@ const makeRequest = async (URL, apiEndPoint, dynamicConfig) => {
     method: apiEndPoint.method,
     ...dynamicConfig,
   };
+
   const { data } = await axios(requestDetails);
+
   return data;
 };
 

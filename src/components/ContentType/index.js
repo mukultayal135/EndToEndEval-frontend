@@ -1,37 +1,37 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import './ContentType.css';
 import PropTypes from 'prop-types';
 import search from '../../assets/icon-search-dark.png';
 
-const ContenType = ({ collection }) => {
+const ContenType = ({ collection, handleType, handleAddType }) => {
   return (
-    <div>
-      <div className="content-page-title">
-        <h1>Content Types</h1>
-      </div>
-      <div className="container-build">
-        <div className="sidebar">
-          {collection.length !== 0 && (
-            <div className="sidebar-count">
-              <h2>{collection.length} Types</h2>
-              <img src={search} alt="search" />
-            </div>
-          )}
-
-          <button type="button" className="add-type-button">
-            + New Type
-          </button>
-          <div className="all-buttons">
-            {collection.length !== 0 &&
-              collection.map((item) => (
-                <div className="button-content-type" key={item.id}>
-                  <div>{item.name}</div>
-                  <div>{item.fields.length}</div>
-                </div>
-              ))}
-          </div>
+    <div className="sidebar">
+      {collection.length !== 0 && (
+        <div className="sidebar-count">
+          <h2>{collection.length} Types</h2>
+          <img src={search} alt="search" />
         </div>
-        <div className="fields">sfdds</div>
+      )}
+
+      <button type="button" className="add-type-button" onClick={handleAddType}>
+        + New Type
+      </button>
+      <div className="all-buttons">
+        {collection.length !== 0 &&
+          collection.map((item) => (
+            <div
+              className="button-content-type"
+              key={item.id}
+              onClick={() => {
+                handleType(item);
+              }}
+            >
+              <div>{item.name}</div>
+              <div>{item.fields.length}</div>
+            </div>
+          ))}
       </div>
     </div>
   );
@@ -45,6 +45,8 @@ ContenType.propTypes = {
       fields: PropTypes.arrayOf(PropTypes.string),
     })
   ).isRequired,
+  handleType: PropTypes.func.isRequired,
+  handleAddType: PropTypes.func.isRequired,
 };
 
 export default ContenType;
