@@ -33,7 +33,6 @@ const AllFields = ({
         type="button"
         className="add-field-button"
         onClick={() => {
-          console.log(JSON.stringify(addFieldButton));
           setAddFieldButton(true);
         }}
       >

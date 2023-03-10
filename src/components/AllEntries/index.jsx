@@ -1,9 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { GET_ALL_ENTRIES, BACKEND_URL } from '../../constants/apiEndPoints';
+import {
+  GET_ALL_ENTRIES,
+  BACKEND_URL,
+  DELETE_ENTRY,
+} from '../../constants/apiEndPoints';
 import edit from '../../assets/user-edit-text-message-note@3x.png';
 import deleteIcon from '../../assets/trash-delete-recycle-bin-bucket-waste@3x.png';
 import makeRequest from '../../utils/makeRequest';
@@ -12,6 +19,9 @@ import './AllEntries.css';
 const AllEntries = ({ contentType }) => {
   const [entries, setEntries] = useState([]);
   const [fields, setFields] = useState([]);
+  const [editButton, setEditButton] = useState(false);
+  const [editEntry, setEditEntry] = useState();
+
   useEffect(() => {
     makeRequest(BACKEND_URL, GET_ALL_ENTRIES(contentType.id), {
       headers: {
@@ -25,6 +35,19 @@ const AllEntries = ({ contentType }) => {
       }
     });
   }, [contentType]);
+
+  const handleDeleteEntry = (id) => {
+    makeRequest(BACKEND_URL, DELETE_ENTRY(id), {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }).then((data) => {
+      setEntries((prevEntries) =>
+        prevEntries.filter((entry) => entry.id !== id)
+      );
+    });
+  };
+
   return entries.length !== 0 ? (
     <div className="content-page">
       <div className="content-page-title">
@@ -56,7 +79,12 @@ const AllEntries = ({ contentType }) => {
               </div>
               <div className="right-entry">
                 <img src={edit} />
-                <img src={deleteIcon} />
+                <img
+                  src={deleteIcon}
+                  onClick={() => {
+                    handleDeleteEntry(entry.id);
+                  }}
+                />
               </div>
             </div>
           ))}

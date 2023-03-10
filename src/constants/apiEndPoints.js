@@ -34,3 +34,8 @@ export const GET_ALL_ENTRIES = (id) => ({
   url: `/${id}/entry`,
   method: 'GET',
 });
+
+export const DELETE_ENTRY = (id) => ({
+  url: `/${id}/entry/`,
+  method: 'DELETE',
+});
