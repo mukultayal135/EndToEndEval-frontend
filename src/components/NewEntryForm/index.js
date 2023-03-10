@@ -37,7 +37,7 @@ const NewEntryForm = ({ name, id, setAddEntry, updateEntry }) => {
     updateEntry(data, id);
   };
   return (
-    <div className="form-container">
+    <div className="form-container-newentry">
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1>New {name}</h1>
         {fields.length !== 0 &&
