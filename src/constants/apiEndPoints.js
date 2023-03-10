@@ -25,6 +25,11 @@ export const DELETE_FIELD = (id) => ({
   method: 'DELETE',
 });
 
+export const CREATE_ENTRY = (id) => ({
+  url: `/${id}/entry`,
+  method: 'POST',
+});
+
 export const ADD_FIELD = (id) => ({
   url: `/content/${id}/fields`,
   method: 'POST',
@@ -38,4 +43,9 @@ export const GET_ALL_ENTRIES = (id) => ({
 export const DELETE_ENTRY = (id) => ({
   url: `/${id}/entry/`,
   method: 'DELETE',
+});
+
+export const UPDATE_FIELD = (id) => ({
+  url: `/content/${id}/fields`,
+  method: 'PATCH',
 });

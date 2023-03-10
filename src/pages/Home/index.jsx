@@ -19,6 +19,7 @@ import {
   UPDATE_CONTENT_TYPE,
   DELETE_FIELD,
   ADD_FIELD,
+  UPDATE_FIELD,
 } from '../../constants/apiEndPoints';
 
 import './Home.css';
@@ -61,6 +62,47 @@ const Home = () => {
           alert(error.response.data.message);
           localStorage.removeItem('token');
           navigate('/');
+        } else if (error.response?.status === 409) {
+          alert(error.response.data.message);
+        } else {
+          alert(error.response.data.message);
+          localStorage.removeItem('token');
+          navigate('/');
+        }
+      });
+  };
+
+  const updateFields = (id, oldName, newName) => {
+    makeRequest(BACKEND_URL, UPDATE_FIELD(id), {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      data: {
+        oldName,
+        newName,
+      },
+    })
+      .then(() => {
+        const newCollection = collection.map((item) => {
+          if (item.id === id) {
+            item.fields = item.fields.map((field) => {
+              if (field === oldName) {
+                return newName;
+              }
+              return field;
+            });
+          }
+          return item;
+        });
+        setCollection(newCollection);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          alert(error.response.data.message);
+          localStorage.removeItem('token');
+          navigate('/');
+        } else {
+          alert(error.response.data.message);
         }
       });
   };
@@ -163,6 +205,7 @@ const Home = () => {
         }
       });
   }, []);
+
   return (
     <div className="home-page">
       <div className="collection-type">
@@ -188,6 +231,7 @@ const Home = () => {
                 handleContentName={handleContentName}
                 handleDeleteField={handleDeleteField}
                 handleAddField={handleAddField}
+                updateFields={updateFields}
               />
             )}
             {addContentType && (

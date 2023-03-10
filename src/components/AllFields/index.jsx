@@ -12,9 +12,12 @@ const AllFields = ({
   handleContentName,
   handleDeleteField,
   handleAddField,
+  updateFields,
 }) => {
   const [editButton, setEditButton] = useState(false);
   const [addFieldButton, setAddFieldButton] = useState(false);
+  const [updateField, setUpdateField] = useState(false);
+  const [updateFieldName, setUpdateFieldName] = useState('');
   const [newField, setNewField] = useState('');
   const [updateName, setUpdateName] = useState('');
 
@@ -43,7 +46,42 @@ const AllFields = ({
           <div className="data-type">Ab</div>
           <div className="fieldName padding">{field}</div>
           <div className="text padding">Text</div>
-          <img className="padding" src={edit} alt="edit" />
+          <img
+            className="padding"
+            src={edit}
+            onClick={() => setUpdateField(true)}
+            alt="edit"
+          />
+          {updateField && (
+            <div className="modal-container">
+              <div className="addtype-modal">
+                <div className="modal-heading">Edit field Name</div>
+                <label htmlFor="cotentType">New name of the Field</label>
+                <input
+                  type="text"
+                  name="cotentType"
+                  onChange={(e) => {
+                    setUpdateFieldName(e.target.value);
+                  }}
+                />
+                <div className="buttons-modal">
+                  <button type="button" onClick={() => setUpdateField(false)}>
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="create"
+                    onClick={() => {
+                      setUpdateField(false);
+                      updateFields(content.id, field, updateFieldName);
+                    }}
+                  >
+                    Edit the Field
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <img
             className="padding"
             src={deleteIcon}
@@ -130,5 +168,6 @@ AllFields.propTypes = {
   handleContentName: PropTypes.func.isRequired,
   handleDeleteField: PropTypes.func.isRequired,
   handleAddField: PropTypes.func.isRequired,
+  updateFields: PropTypes.func.isRequired,
 };
 export default AllFields;
