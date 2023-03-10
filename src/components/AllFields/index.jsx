@@ -7,8 +7,15 @@ import edit from '../../assets/user-edit-text-message-note@3x.png';
 import deleteIcon from '../../assets/trash-delete-recycle-bin-bucket-waste@3x.png';
 import './AllFields.css';
 
-const AllFields = ({ content, handleContentName, handleDeleteField }) => {
+const AllFields = ({
+  content,
+  handleContentName,
+  handleDeleteField,
+  handleAddField,
+}) => {
   const [editButton, setEditButton] = useState(false);
+  const [addFieldButton, setAddFieldButton] = useState(false);
+  const [newField, setNewField] = useState('');
   const [updateName, setUpdateName] = useState('');
 
   const handleEditName = () => {
@@ -22,7 +29,14 @@ const AllFields = ({ content, handleContentName, handleDeleteField }) => {
         <img src={edit} onClick={handleEditName} alt="edit" />
       </div>
       <div className="fields-number">{content.fields.length} Fields</div>
-      <button type="button" className="add-field-button">
+      <button
+        type="button"
+        className="add-field-button"
+        onClick={() => {
+          console.log(JSON.stringify(addFieldButton));
+          setAddFieldButton(true);
+        }}
+      >
         Add Another Field
       </button>
       {content.fields.map((field) => (
@@ -65,7 +79,40 @@ const AllFields = ({ content, handleContentName, handleDeleteField }) => {
                   handleContentName(updateName, content.id);
                 }}
               >
-                Edit
+                Edit Field
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {addFieldButton && (
+        <div className="modal-container">
+          <div className="addtype-modal">
+            <div className="modal-heading">Add field</div>
+            <label htmlFor="cotentType">Name of the Field</label>
+            <input
+              type="text"
+              name="cotentType"
+              onChange={(e) => {
+                setNewField(e.target.value);
+              }}
+            />
+            <div className="buttons-modal">
+              <button
+                type="button"
+                onClick={() => setAddFieldButton(!addFieldButton)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="create"
+                onClick={() => {
+                  setAddFieldButton(!addFieldButton);
+                  handleAddField(newField, content.id);
+                }}
+              >
+                Add New Field
               </button>
             </div>
           </div>
@@ -83,5 +130,6 @@ AllFields.propTypes = {
   }).isRequired,
   handleContentName: PropTypes.func.isRequired,
   handleDeleteField: PropTypes.func.isRequired,
+  handleAddField: PropTypes.func.isRequired,
 };
 export default AllFields;

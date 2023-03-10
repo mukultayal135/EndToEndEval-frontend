@@ -24,3 +24,13 @@ export const DELETE_FIELD = (id) => ({
   url: `/content/${id}/fields`,
   method: 'DELETE',
 });
+
+export const ADD_FIELD = (id) => ({
+  url: `/content/${id}/fields`,
+  method: 'POST',
+});
+
+export const GET_ALL_ENTRIES = (id) => ({
+  url: `/${id}/entry`,
+  method: 'GET',
+});

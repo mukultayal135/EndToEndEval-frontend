@@ -4,7 +4,12 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AllCollection, AllFields, ContentType } from '../../components';
+import {
+  AllCollection,
+  AllFields,
+  ContentType,
+  AllEntries,
+} from '../../components';
 import makeRequest from '../../utils/makeRequest';
 
 import {
@@ -13,6 +18,7 @@ import {
   CREATE_CONTENT_TYPE,
   UPDATE_CONTENT_TYPE,
   DELETE_FIELD,
+  ADD_FIELD,
 } from '../../constants/apiEndPoints';
 
 import './Home.css';
@@ -20,13 +26,43 @@ import './Home.css';
 const Home = () => {
   const navigate = useNavigate();
   const [collection, setCollection] = useState([]);
-  const [pageType, setPageType] = useState('ContentBuild');
+  const [pageType, setPageType] = useState({
+    name: 'ContentBuild',
+    id: null,
+  });
   const [contentType, setContentType] = useState(null);
   const [addContentType, setAddContentType] = useState(false);
   const [newType, setType] = useState();
 
   const handleType = (item) => {
     setContentType(item);
+  };
+
+  const handleAddField = (addField, id) => {
+    makeRequest(BACKEND_URL, ADD_FIELD(id), {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      data: {
+        field: addField,
+      },
+    })
+      .then(() => {
+        const newCollection = collection.map((item) => {
+          if (item.id === id) {
+            item.fields = [...item.fields, addField];
+          }
+          return item;
+        });
+        setCollection([...newCollection]);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          alert(error.response.data.message);
+          localStorage.removeItem('token');
+          navigate('/');
+        }
+      });
   };
 
   const handleDeleteField = (id, deletedField) => {
@@ -55,6 +91,7 @@ const Home = () => {
         }
       });
   };
+
   const handleContentName = (name, id) => {
     makeRequest(BACKEND_URL, UPDATE_CONTENT_TYPE(id), {
       headers: {
@@ -81,6 +118,7 @@ const Home = () => {
         }
       });
   };
+
   const newContentType = (e) => {
     setType(e.target.value);
   };
@@ -133,53 +171,58 @@ const Home = () => {
         </div>
         <AllCollection collection={collection} setPageType={setPageType} />
       </div>
-      <div className="content-page">
-        <div className="content-page-title">
-          <h1>Content Types</h1>
-        </div>
-        <div className="container-build">
-          <ContentType
-            collection={collection}
-            handleType={handleType}
-            handleAddType={handleAddType}
-          />
-          {contentType && (
-            <AllFields
-              content={contentType}
-              handleContentName={handleContentName}
-              handleDeleteField={handleDeleteField}
+      {pageType.name === 'ContentBuild' ? (
+        <div className="content-page">
+          <div className="content-page-title">
+            <h1>Content Types</h1>
+          </div>
+          <div className="container-build">
+            <ContentType
+              collection={collection}
+              handleType={handleType}
+              handleAddType={handleAddType}
             />
-          )}
-          {addContentType && (
-            <div className="modal-container">
-              <div className="addtype-modal">
-                <div className="modal-heading">Create a new content type</div>
-                <label htmlFor="cotentType">Name of the content type</label>
-                <input
-                  type="text"
-                  name="cotentType"
-                  onChange={newContentType}
-                />
-                <div className="buttons-modal">
-                  <button type="button" onClick={handleAddType}>
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="create"
-                    onClick={() => {
-                      addNewType();
-                      handleAddType();
-                    }}
-                  >
-                    Create
-                  </button>
+            {contentType && (
+              <AllFields
+                content={contentType}
+                handleContentName={handleContentName}
+                handleDeleteField={handleDeleteField}
+                handleAddField={handleAddField}
+              />
+            )}
+            {addContentType && (
+              <div className="modal-container">
+                <div className="addtype-modal">
+                  <div className="modal-heading">Create a new content type</div>
+                  <label htmlFor="cotentType">Name of the content type</label>
+                  <input
+                    type="text"
+                    name="cotentType"
+                    onChange={newContentType}
+                  />
+                  <div className="buttons-modal">
+                    <button type="button" onClick={handleAddType}>
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="create"
+                      onClick={() => {
+                        addNewType();
+                        handleAddType();
+                      }}
+                    >
+                      Create
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <AllEntries contentType={pageType} />
+      )}
     </div>
   );
 };

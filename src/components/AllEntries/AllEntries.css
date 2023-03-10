@@ -1,0 +1,73 @@
+.content-page-entries title {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  color: gray;
+  background-color: white;
+  text-align: left;
+  padding: 15px;
+}
+.content-page-title h1 {
+  margin: 0;
+  padding: 0;
+  color: rgb(79, 79, 80);
+  width: max-content;
+  padding-left: 30px;
+}
+.total-entries {
+  padding: 2em 2em;
+  display: flex;
+  justify-content: space-between;
+}
+.count-entry {
+  font-size: 1.5rem;
+  color: rgb(79, 79, 80);
+  font-weight: bold;
+}
+.add-entry {
+  color: #5905ce;
+  font-weight: bold;
+}
+.attributes {
+  display: flex;
+  color: black;
+}
+.left-entry {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+.right-entry {
+  display: flex;
+  justify-content: center;
+  width: 20%;
+  display: flex;
+}
+.entries-values {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+}
+.entry {
+  margin-top: 2em;
+  border-radius: 5px;
+  background-color: white;
+  padding: 0.7em 0.7em;
+  display: flex;
+  justify-content: space-between;
+  color: black;
+}
+.container-entries {
+  padding: 0 10px;
+}
+
+.container-new {
+  display: flex;
+}
+.right-entry img {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}

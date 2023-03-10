@@ -20,7 +20,10 @@ const AllCollection = ({ collection, setPageType }) => {
             <li
               key={item.id}
               onClick={() => {
-                setPageType(item.name);
+                setPageType({
+                  name: item.name,
+                  id: item.id,
+                });
               }}
             >
               {item.name}
@@ -31,7 +34,10 @@ const AllCollection = ({ collection, setPageType }) => {
       <div
         className="content-builder"
         onClick={() => {
-          setPageType('ContentBuild');
+          setPageType({
+            name: 'ContentBuild',
+            id: null,
+          });
         }}
       >
         <h4>CONTENT TYPE BUILDER</h4>

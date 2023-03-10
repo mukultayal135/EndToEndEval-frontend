@@ -33,6 +33,9 @@
   padding-bottom: 10px;
   color: gray;
 }
+.collection-item li:hover {
+  background-color: black;
+}
 .content-builer {
   margin: 0px;
 }
